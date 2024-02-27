@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('/static/image/background.jpg');
+            background-size: cover; 
+            background-repeat: no-repeat; 
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="p-4 ml-2">
+        <div class="container mx-auto flex justify-between items-center">
+            <div>
+                <a href="#" class="text-white text-lg font-bold">Logo</a>
+            </div>
+            <!-- Navigation links -->
+            <div class="pt-4 hidden md:block">
+                <a href="#" class="text-lg text-white ml-4 hover:text-gray-300">Menu</a>
+                <a href="#" class="text-lg text-white ml-4 hover:text-gray-300">Contact</a>
+                <a href="#" class="text-lg text-white ml-4 hover:text-gray-300">Logout</a>
+                <a href="#" class="text-lg text-white ml-4 hover:text-gray-300">Login</a>
+                <a href="#" class="text-lg text-white ml-4 hover:text-gray-300">Register</a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button class="text-white focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="p-8 0 bg-white w-96 mx-auto rounded">
+        <div class="text-center">
+          <h1 class="text-center text-3xl font-semibold mb-4">Login</h1>
+          <form method="POST" class="mx-auto max-w-md" action="{% url 'login' %}">
+              {% csrf_token %}
+              <div class="mb-4">
+                {{ form.username }}
+              </div>
+              <div class="mb-4">
+                {{ form.password }}
+              </div>
+              <button type="submit" class="bg-blue-100 text-black py-2 px-4 rounded">Login</button>
+          </form>
+        </div>
+      </div>
+    
+    
+
+</body>
+</html>
+
