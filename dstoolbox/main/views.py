@@ -7,6 +7,13 @@ from .forms import *
 def index(request):
     return render(request, "index.html")
 
+def menu(request):
+    return render(request, "menu.html")
+
+def menuimg(request):
+    return render(request, "menuimg.html")
+
+
 def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)

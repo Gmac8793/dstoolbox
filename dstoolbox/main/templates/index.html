@@ -23,7 +23,7 @@
             </div>
             <!-- Navigation links -->
             <div class="pt-4 hidden md:block">
-                <a href="#" class="text-lg text-white ml-4 hover:text-gray-300">Menu</a>
+                <a href="{% url 'menuimg' %}" class="text-lg text-white ml-4 hover:text-gray-300">Menu</a>
                 <a href="#" class="text-lg text-white ml-4 hover:text-gray-300">Contact</a>
                 <a href="#" class="text-lg text-white ml-4 hover:text-gray-300">Logout</a>
                 <a href="{% url 'login' %}" class="text-lg text-white ml-4 hover:text-gray-300">Login</a>
@@ -44,7 +44,7 @@
         <div>
             <h1 class="font-serif text-2xl">Want some drinks?</h1><br>
             <div class="">
-                <button class="p-2 rounded bg-white text-black"><a href="#">Order Now</a></button>
+                <button class="p-2 rounded bg-white text-black"><a href="{% url 'menu' %}">Order Now</a></button>
             </div>
         </div>
     </div>
