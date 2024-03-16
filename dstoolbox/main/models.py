@@ -26,6 +26,9 @@ class Menu(models.Model):
     def __str__(self):
         return self.name
 
+class Cart(models.Model):
+    name = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    price = models.ForeignKey(Menu, on_delete=models.CASCADE)
 
 class Category(models.Model):
     name = models.CharField(max_length=30)
