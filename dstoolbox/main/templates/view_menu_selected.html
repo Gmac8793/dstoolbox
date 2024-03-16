@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   
+</head>
+<body>
+    
+
+    <!-- Main content -->
+<form id="menu-selection-form" method="POST" action="{% url 'view_menu_selected' %}">
+    {% csrf_token %}
+    <h2>Selected Items</h2>
+    <ul id="selected-items">
+        <!-- Display selected items here -->
+    </ul>
+    <button type="submit">Confirm Selection</button>
+</form>
+
+<script>
+    document.getElementById('confirm-button').addEventListener('click', function() {
+        const selectedItems = [];
+        const items = document.querySelectorAll('#selected-items li');
+        
+        items.forEach(item => {
+            selectedItems.push(item.textContent.trim());
+        });
+
+        // Send selected items to the server using AJAX
+        fetch('{% url "view_menu_selected" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'  // Include CSRF token for Django
+            },
+            body: JSON.stringify({ selected_items: selectedItems })
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            console.log(data);
+            // Redirect to the confirmation page
+            window.location.href = '/confirmation-page'; // Replace '/confirmation-page' with the actual URL of your confirmation page
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+        document.getElementById('menu-selection-form').submit();
+    });
+</script>
+
+
+
+</body>
+</html>

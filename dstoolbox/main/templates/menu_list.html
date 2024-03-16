@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Page</title>
+    <link rel="stylesheet" href="{% static 'css/menupage.css' %}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <style>
+    </style>
+</head>
+
+<body>
+    <header>
+        <img class="h-80 w-full object-cover" src="{% static 'image/background.jpg' %}" alt="">
+      </header>
+      <nav class="p-5 bg-white shadow md:flex md:items-center md:justify-between flex flex-col">
+        <div class="row">
+          <ul class="md:flex space-x-4">
+            <li class="flex-grow"><a href="#drinks">เครื่องดื่ม</a></li>
+            <li class="flex-grow"><a href="#desserts">ของหวาน</a></li>
+            <li class="flex-grow"><a href="#main-courses">อาหารจานหลัก</a></li>
+          </ul>
+        </div>
+      </nav>
+  
+      <!-- Main content -->
+      
+      <h2>Selected Items</h2>
+      <ul id="selected-items">
+        <!-- Display selected items here -->
+      </ul>
+      <button><a href="{% url 'view_menu_selected' %}?selected_items={{ selected_items }}">ยืนยัน</a></button>
+
+      <div class="main-container bg-black text-black"> 
+        <section id="drinks" class="">
+            <h1 class="text-2xl py-8 text-white">เครื่องดื่ม</h1>
+            <div class="menu-container" id="menu-list">
+                {% for menu in drinks_menus %}
+                    <div class="menu-item">
+                        <h2>{{ menu.name }}</h2>
+                        <p>Price: {{ menu.price }}</p>
+                        <form action="{% url 'add_to_cart' menu.id %}" method="post">
+                            {% csrf_token %}
+                            <button class="add-to-cart" type="submit">Add to Cart</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+          </section>
+    
+          <section id="desserts" class="">
+            <h1 class="text-2xl py-8 text-white">ของหวาน</h1>
+            <div class="menu-container">
+                {% for menu in desserts_menus %}
+                    <div class="menu-item">
+                        <h2>{{ menu.name }}</h2>
+                        <p>Price: {{ menu.price }}</p>
+                        <form action="{% url 'add_to_cart' menu.id %}" method="post">
+                            {% csrf_token %}
+                            <button class="add-to-cart" type="submit">Add to Cart</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+          </section>
+    
+          <section id="main-courses" class="">
+            <h1 class="text-2xl py-8 text-white">อาหารจานหลัก</h1>
+            <div class="menu-container">
+                {% for menu in main_courses_menus %}
+                    <div class="menu-item">
+                        <h2>{{ menu.name }}</h2>
+                        <p>Price: {{ menu.price }}</p>
+                        <form action="{% url 'add_to_cart' menu.id %}" method="post">
+                            {% csrf_token %}
+                            <button class="add-to-cart" type="submit">Add to Cart</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+          </section>
+      </div>
+
+      
+
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+    
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        <!-- popup -->
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the default form submission behavior
+    
+                const item = button.closest('.menu-item'); // Find the parent menu item
+                const itemName = item.querySelector('h2').textContent.trim(); // Get the name
+                const itemPrice = parseFloat(item.querySelector('p').textContent.split(':')[1]); // Get the price
+    
+                // Add the selected item to the list
+                const selectedItem = document.createElement('li');
+                selectedItem.textContent = `${itemName} - Price: $${itemPrice.toFixed(2)}`;
+                document.getElementById('selected-items').appendChild(selectedItem);
+            });
+        });
+
+
+
+         //
+         
+    </script>
+</body>
+</html>
+
